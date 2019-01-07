@@ -1,0 +1,122 @@
+scp_program -> proc_rec
+(*
+	-> rrel_params : ...
+	(*
+		-> rrel_1 : rrel_in : vertex ;;
+		-> rrel_2 : rrel_in : _set_vertex ;;
+		-> rrel_3 : rrel_in : _num ;;
+		-> rrel_4 : rrel_in : _counter ;;
+	*);;
+	-> rrel_operators : ...
+	(*
+		-> rrel_init : .proc_rec_operator1 // занесение смежных вершин с входной во множество _adj_vertex
+		(*
+			<- searchSetStr3 ;;
+
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : vertex ;;
+			-> rrel_2 : rrel_assign : rrel_scp_var : rrel_common : _com ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_node : _node2 ;;
+	
+			-> rrel_set_3 : rrel_assign : rrel_scp_var : rrel_node : _adj_vertex ;;
+	
+			=> nrel_then : .proc_rec_operator2A ;;
+			=> nrel_else : .proc_rec_operator_return ;;
+		*);;
+		-> .proc_rec_operator2A // поиск любого элемента во множетсве _adj_vertex
+		(*
+			<- searchElStr3 ;;
+	
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _adj_vertex ;;
+			-> rrel_2 : rrel_assign : rrel_scp_var : rrel_pos_const_perm : _arc1 ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_node : _node2 ;;
+
+			=> nrel_then : .proc_rec_operator2B ;;
+			=> nrel_else : .proc_rec_operator_return ;;
+		*) ;;
+		-> .proc_rec_operator2B // проверяем, если ли этот элемент во множестве _set_of_vertex
+		(*
+			<- searchElStr3 ;;
+	
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _set_vertex ;;
+			-> rrel_2 : rrel_assign : rrel_scp_var : rrel_pos_const_perm : _arc2 ;;
+			-> rrel_3 : rrel_fixed : rrel_scp_var : rrel_node : _node2 ;;
+
+			=> nrel_then : .proc_rec_operator2C ;;
+			=> nrel_else : .proc_rec_operator_add ;;
+		*) ;;
+		-> .proc_rec_operator2C // удаление связи между _adj_vertex и вершиной
+		(*
+			<- eraseEl ;;
+
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_pos_const_perm : rrel_erase : _arc1 ;;
+
+			=> nrel_goto : .proc_rec_operator2D ;;
+		*);;
+		-> .proc_rec_operator2D // удаление связи между _set_of_vertex и вершиной
+		(*
+			<- eraseEl ;;
+
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_pos_const_perm : rrel_erase : _arc2 ;;
+
+			=> nrel_goto : .proc_rec_operator2E ;;
+		*);;
+		-> .proc_rec_operator2E // повтор подпрограммы
+		(*
+			<- call ;;
+
+			-> rrel_1 : rrel_fixed : rrel_scp_const : proc_rec ;;
+			-> rrel_2 : rrel_fixed : rrel_scp_const : ...
+			(*
+				-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _node2 ;;
+				-> rrel_2 : rrel_fixed : rrel_scp_var : rrel_node : _set_vertex ;;
+				-> rrel_3 : rrel_fixed : rrel_scp_var : rrel_link : _num ;;
+				-> rrel_4 : rrel_fixed : rrel_scp_var : rrel_link : _counter ;;
+			*) ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_node : _descr ;;
+			
+			=> nrel_goto : .proc_rec_operator2F ;;
+		*) ;;
+		-> .proc_rec_operator2F
+		(*
+			<- waitReturn ;;
+			
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _descr ;;
+
+			=> nrel_goto : .proc_rec_operator2A ;;
+		*);;
+		-> .proc_rec_operator_add
+		(*
+			<- contAdd ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_link : _counter ;;
+			-> rrel_2 : rrel_fixed : rrel_scp_var : rrel_link : _counter ;;
+			-> rrel_3 : rrel_fixed : rrel_scp_const : [1];;
+
+			=> nrel_goto : .proc_rec_operator_compare ;;
+		*);;
+		-> .proc_rec_operator_compare
+		(*
+			<- ifEq ;;
+
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_link : _counter ;;
+			-> rrel_2 : rrel_fixed : rrel_scp_const : [2] ;;
+			
+			=> nrel_then : .proc_rec_operator_add_num ;;
+			=> nrel_else : .proc_rec_operator_return ;;
+		*);;
+		-> .proc_rec_operator_add_num
+		(*
+			<- contAdd ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_link : _num ;;
+			-> rrel_2 : rrel_fixed : rrel_scp_var : rrel_link : _num ;;
+			-> rrel_3 : rrel_fixed : rrel_scp_const : [1];;
+
+			=> nrel_goto : .proc_rec_operator_return ;;
+		*);;
+		-> .proc_rec_operator_return
+		(*
+			<- return ;;
+		*) ;;
+	*);;
+*);;

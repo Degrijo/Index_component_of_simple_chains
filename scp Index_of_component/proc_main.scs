@@ -1,0 +1,179 @@
+scp_program -> proc_main
+(*
+	-> rrel_params : ...
+	(*
+		-> rrel_1 : rrel_in : test ;;
+	*);;
+	-> rrel_operators : ... 
+	(*
+		-> rrel_init : .proc_main_operator_1A // занесение всех вершин во множество _unvisver
+		(*
+			<- searchSetStr3 ;;
+			
+			-> rrel_1 : rrel_fixed : rrel_scp_const : rrel_struct : test ;;
+			-> rrel_2 : rrel_assign : rrel_scp_var : rrel_pos_const_perm : _arc1 ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_node : _node ;;
+		
+			-> rrel_set_3 : rrel_assign : rrel_scp_var : rrel_node : _unvisver ;;
+
+			=> nrel_then : .proc_main_operator_1B ;;
+			=> nrel_else : .proc_main_operator_return ;;
+		*);;
+		-> .proc_main_operator_1B // поиск любой вершины в _unvisver
+		(*
+			<- searchElStr3 ;;
+	
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _unvisver ;;
+			-> rrel_2 : rrel_assign : rrel_scp_var : rrel_pos_const_perm : _arc1 ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_node : _node ;;
+	
+			=> nrel_then : .proc_main_operator_1C ;;
+			=> nrel_else : .proc_main_operator_2A ;;
+		*);;
+		-> .proc_main_operator_1C // удаление связи между _unvisver и вершиной
+		(*
+			<- eraseEl ;;
+			
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_pos_const_perm : rrel_erase : _arc1 ;;
+	
+			=> nrel_goto : .proc_main_operator_1D ;;
+		*);;
+		-> .proc_main_operator_1D // вызов подпрограммы для удаления рёбер
+		(*
+			<- call ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_const : proc_recursion ;;
+			-> rrel_2 : rrel_fixed : rrel_scp_const : ...
+			(*
+				-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _node ;;
+			*) ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_node : _descr ;;
+			
+			=> nrel_goto : .proc_main_operator_1E ;;
+		*);;
+		-> .proc_main_operator_1E
+		(*
+			<- waitReturn ;;
+
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _descr ;;
+	
+			=> nrel_goto : .proc_main_operator_1B ;;
+		*) ;;
+		-> .proc_main_operator_2A // создание переменной, хранимой значение числа индекса компонента
+		(*
+			<- contAssign ;;
+	
+			-> rrel_1 : rrel_assign : rrel_scp_var : rrel_link : _index_component ;;
+			-> rrel_2 : rrel_fixed : rrel_scp_const : [0] ;;
+
+			=> nrel_goto : .proc_main_operator_2B ;;
+		*);;
+		-> .proc_main_operator_2B // Занесение вершин во множество _set_of_vertex
+		(*
+			<- searchSetStr3 ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_const : rrel_struct : test ;;
+			-> rrel_2 : rrel_assign : rrel_scp_var : rrel_pos_const_perm : _arc1 ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_node : _node ;;
+			
+			-> rrel_set_3 : rrel_assign : rrel_scp_var : rrel_node : _set_of_vertex ;;
+		
+			=> nrel_then : .proc_main_operator_2C ;;
+			=> nrel_else : .proc_main_operator_return ;;
+		*) ;;
+		-> .proc_main_operator_2C // поиск любой вершины во множестве _set_of_vertex
+		(*
+			<- searchElStr3 ;;
+
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _set_of_vertex ;;
+			-> rrel_2 : rrel_assign : rrel_scp_var : rrel_pos_const_perm : _arc1 ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_node : _node1 ;;
+
+			=> nrel_then : .proc_main_operator_2D ;;
+			=> nrel_else : .proc_main_operator_print_answer ;;
+		*);;
+		-> .proc_main_operator_2D // удаление связи между этой вершиной и множеством _set_of_vertex
+		(*
+			<- eraseEl ;;
+
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_pos_const_perm : rrel_erase : _arc1 ;;
+
+			=> nrel_goto : .proc_main_operator_3A ;;
+		*);;
+		-> .proc_main_operator_3A // проверка, есть ли у этой вершины цепь
+		(*
+			<- searchElStr3 ;;
+			
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _node1 ;;
+			-> rrel_2 : rrel_assign : rrel_scp_var : rrel_common : _com ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_node : _node2 ;;
+	
+			=> nrel_then : .proc_main_operator_3BA ;;
+			=> nrel_else : .proc_main_operator_add_index ;;
+		*);;
+		-> .proc_main_operator_3BA // создание переменной-счётчика
+		(*
+			<- contAssign ;;
+
+			-> rrel_1 : rrel_assign : rrel_scp_var : rrel_link : _counter ;;
+			-> rrel_2 : rrel_fixed : rrel_scp_const : [0] ;;
+
+			=> nrel_goto : .proc_main_operator_3B ;;
+		*);;
+		-> .proc_main_operator_3B 
+		(*
+			<- call ;;
+
+			-> rrel_1 : rrel_fixed : rrel_scp_const : proc_rec ;;
+			-> rrel_2 : rrel_fixed : rrel_scp_const : ...
+			(*
+				-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _node1 ;;
+				-> rrel_2 : rrel_fixed : rrel_scp_var : rrel_node : _set_of_vertex ;;
+				-> rrel_3 : rrel_fixed : rrel_scp_var : rrel_link : _index_component ;;
+				-> rrel_4 : rrel_fixed : rrel_scp_var : rrel_link : _counter ;;
+			*) ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_node : _descr ;;
+	
+			=> nrel_goto : .proc_main_operator_3C ;;
+		*);;
+		-> .proc_main_operator_3C
+		(*
+			<- waitReturn ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _descr ;;
+
+			=> nrel_goto : .proc_main_operator_2C ;;
+		*);;
+		-> .proc_main_operator_add_index // увеличение числа индекса компонент на 1
+		(*
+			<- contAdd ;;
+	
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_link : _index_component ;;
+			-> rrel_2 : rrel_fixed : rrel_scp_var : rrel_link : _index_component ;;
+			-> rrel_3 : rrel_fixed : rrel_scp_const : [1];;
+
+			=> nrel_goto : .proc_main_operator_2C ;;
+		*);;
+		-> .proc_main_operator_print_answer
+		(*
+			<- printNl ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_const : [---------------- Index of components ----------------] ;;
+		
+			=> nrel_goto : .proc_main_operator_print ;;
+		*);;
+		-> .proc_main_operator_print
+		(*
+			<- printNl ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_link : _index_component ;;
+		
+			=> nrel_goto : .proc_main_operator_return ;;
+		*);;
+		-> .proc_main_operator_return
+		(*
+			<- return ;;
+		*);;
+	*);;
+*);;
+		

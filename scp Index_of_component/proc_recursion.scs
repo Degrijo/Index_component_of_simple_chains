@@ -1,0 +1,112 @@
+scp_program -> proc_recursion
+(*
+	-> rrel_params : ...
+	(*
+		-> rrel_1 : rrel_in : vertex ;;
+	*);;
+	-> rrel_operators : ...
+	(*
+		-> rrel_init : .proc_recursion_operator1 // переменная для подсчёта входящих рёбер
+		(*
+			<- contAssign ;;
+
+			-> rrel_1 : rrel_assign : rrel_scp_var : rrel_link : _num_com;;
+			-> rrel_2 : rrel_fixed : rrel_scp_const : [0] ;;
+
+			=> nrel_goto : .proc_recursion_operator2 ;;
+		*);;
+		->.proc_recursion_operator2 // занесение всех выходязих рёбер во множество _set_of_common
+		(*
+			<- searchSetStr3 ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : vertex ;;
+			-> rrel_2 : rrel_assign : rrel_scp_var : rrel_common :_com1 ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_node : _node2 ;;
+	
+			-> rrel_set_2 : rrel_assign : rrel_scp_var : rrel_node : _set_of_common ;;
+		
+			=> nrel_then : .proc_recursion_operator3A ;;
+			=> nrel_else : .proc_recursion_operator_return ;;
+		*);;
+		-> .proc_recursion_operator3A // поиск любого ребра в этом множестве
+		(*
+			<- searchElStr3 ;;
+	
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _set_of_common ;;
+			-> rrel_2 : rrel_assign : rrel_scp_var : rrel_pos_const_perm :_arc1 ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_common : _com1 ;;
+
+			=> nrel_then : .proc_recursion_operator3B ;;
+			=> nrel_else : .proc_recursion_operator4 ;;
+		*);;
+		-> .proc_recursion_operator3B // удаление связи между множеством и определённым в прошлом пункте ребром
+		(*
+			<- eraseEl ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_pos_const_perm : rrel_erase : _arc1 ;;
+
+			=> nrel_goto : .proc_recursion_operator3C ;;
+		*);;
+		-> .proc_recursion_operator3C // увелечение числа выходящих рёбер на 1
+		(*
+			<- contAdd ;;
+			
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_link : _num_com ;;
+			-> rrel_2 : rrel_fixed : rrel_scp_var : rrel_link : _num_com ;;
+			-> rrel_3 : rrel_fixed : rrel_scp_const : [1] ;;
+
+			=> nrel_goto : .proc_recursion_operator3A ;;
+		*);;
+		-> .proc_recursion_operator4 // если число выходящих рёбер >= 3, то ...
+		(*
+			<- ifGr ;;
+
+			-> rrel_1 : rrel_fixed : rrel_scp_const : [3] ;;
+			-> rrel_2 : rrel_fixed : rrel_scp_var : rrel_link : _num_com ;;
+
+			=> nrel_then : .proc_recursion_operator_return ;;
+			=> nrel_else : .proc_recursion_operator5A ;;
+		*);;
+		-> .proc_recursion_operator5A // поиск любого ребра во множестве _set_of_common_1
+		(*
+			<- searchElStr3 ;;
+	
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : vertex ;;
+			-> rrel_2 : rrel_assign : rrel_scp_var : rrel_common :_com1 ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_node : _node2 ;;
+
+			=> nrel_then : .proc_recursion_operator5B ;;
+			=> nrel_else : .proc_recursion_operator_return ;;
+		*);;
+		-> .proc_recursion_operator5B // поиск второй вершины для удаления ребра  
+		(*
+			<- searchElStr3 ;;
+			
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _node2 ;;
+			-> rrel_2 : rrel_assign : rrel_scp_var : rrel_common : _com2 ;;
+			-> rrel_3 : rrel_fixed : rrel_scp_var : rrel_node : vertex ;;
+	
+			=> nrel_goto : .proc_recursion_operator5C ;;
+		*);;
+		-> .proc_recursion_operator5C // удаление ребра
+		(*
+			<- eraseEl ;;
+			
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_common : rrel_erase : _com1 ;;
+
+			=> nrel_goto : .proc_recursion_operator5D ;;
+		*);;
+		-> .proc_recursion_operator5D
+		(*
+			<- eraseEl ;;
+
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_common : rrel_erase : _com2 ;;
+
+			=> nrel_goto : .proc_recursion_operator1 ;;
+		*);;
+		-> .proc_recursion_operator_return 
+		(*
+			<- return ;;
+		*);;
+	*);;
+*);;

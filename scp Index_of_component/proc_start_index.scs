@@ -1,0 +1,156 @@
+scp_program -> run_all_tests
+(*
+	-> rrel_params : ... ;;
+	-> rrel_operators : ...
+	(*
+		-> rrel_init : .operator_1_0
+		(*
+			<- printNl ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_const : [------------------- Test 1 -------------------] ;;
+
+			=> nrel_goto : .operator_1_1 ;;
+		*);;
+		-> .operator_1_1
+		(*
+			<- call ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_const : proc_main ;;
+			-> rrel_2 : rrel_fixed : rrel_scp_const : ...
+			(*
+				-> rrel_1 : rrel_fixed : rrel_scp_const : rrel_struct : graph1 ;;
+			*) ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_node : _descr1 ;;
+			
+			=> nrel_goto : .operator_1_2 ;;
+		*);;
+		-> .operator_1_2
+		(*
+			<- waitReturn ;;
+
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _descr1 ;;
+	
+			=> nrel_goto : .operator_2_0 ;;
+		*) ;;
+		-> .operator_2_0
+		(*
+			<- printNl ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_const : [------------------- Test 2 -------------------] ;;
+
+			=> nrel_goto : .operator_2_1 ;;
+		*);;
+		-> .operator_2_1
+		(*
+			<- call ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_const : proc_main ;;
+			-> rrel_2 : rrel_fixed : rrel_scp_const : ...
+			(*
+				-> rrel_1 : rrel_fixed : rrel_scp_const : rrel_struct : graph2 ;;
+			*) ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_node : _descr2 ;;
+			
+			=> nrel_goto : .operator_2_2 ;;
+		*);;
+		-> .operator_2_2
+		(*
+			<- waitReturn ;;
+
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _descr2 ;;
+	
+			=> nrel_goto : .operator_3_0 ;;
+		*) ;;
+		-> .operator_3_0
+		(*
+			<- printNl ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_const : [------------------- Test 3 -------------------] ;;
+
+			=> nrel_goto : .operator_3_1 ;;
+		*);;
+		-> .operator_3_1
+		(*
+			<- call ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_const : proc_main ;;
+			-> rrel_2 : rrel_fixed : rrel_scp_const : ...
+			(*
+				-> rrel_1 : rrel_fixed : rrel_scp_const : rrel_struct : graph3 ;;
+			*) ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_node : _descr3 ;;
+			
+			=> nrel_goto : .operator_3_2 ;;
+		*);;
+		-> .operator_3_2
+		(*
+			<- waitReturn ;;
+
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _descr3 ;;
+	
+			=> nrel_goto : .operator_4_0 ;;
+		*) ;;
+		-> .operator_4_0
+		(*
+			<- printNl ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_const : [------------------- Test 4 -------------------] ;;
+
+			=> nrel_goto : .operator_4_1 ;;
+		*);;
+		-> .operator_4_1
+		(*
+			<- call ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_const : proc_main ;;
+			-> rrel_2 : rrel_fixed : rrel_scp_const : ...
+			(*
+				-> rrel_1 : rrel_fixed : rrel_scp_const : rrel_struct : graph4 ;;
+			*) ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_node : _descr4 ;;
+			
+			=> nrel_goto : .operator_4_2 ;;
+		*);;
+		-> .operator_4_2
+		(*
+			<- waitReturn ;;
+
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _descr4 ;;
+	
+			=> nrel_goto : .operator_5_0 ;;
+		*) ;;
+		-> .operator_5_0
+		(*
+			<- printNl ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_const : [------------------- Test 5 -------------------] ;;
+
+			=> nrel_goto : .operator_5_1 ;;
+		*);;
+		-> .operator_5_1
+		(*
+			<- call ;;
+		
+			-> rrel_1 : rrel_fixed : rrel_scp_const : proc_main ;;
+			-> rrel_2 : rrel_fixed : rrel_scp_const : ...
+			(*
+				-> rrel_1 : rrel_fixed : rrel_scp_const : rrel_struct : graph5 ;;
+			*) ;;
+			-> rrel_3 : rrel_assign : rrel_scp_var : rrel_node : _descr5 ;;
+			
+			=> nrel_goto : .operator_5_2 ;;
+		*);;
+		-> .operator_5_2
+		(*
+			<- waitReturn ;;
+
+			-> rrel_1 : rrel_fixed : rrel_scp_var : rrel_node : _descr5 ;;
+	
+			=> nrel_goto : .operator_return ;;
+		*) ;;
+		-> .operator_return
+		(*
+			<- return ;;
+		*);;
+	*);;
+*);;
